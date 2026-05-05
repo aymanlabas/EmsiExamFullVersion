@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Analyse Stratégique — EmsiExam</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f0f4f8;
+      color: #1e293b;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* ── COVER PAGE ── */
+    .cover {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 40px;
+      page-break-after: always;
+      position: relative;
+      overflow: hidden;
+    }
+    .cover::before {
+      content: '';
+      position: absolute;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: rgba(59,130,246,0.15);
+      top: -100px; left: -100px;
+    }
+    .cover::after {
+      content: '';
+      position: absolute;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: rgba(99,102,241,0.15);
+      bottom: -80px; right: -80px;
+    }
+    .cover-badge {
+      background: rgba(59,130,246,0.2);
+      border: 1px solid rgba(59,130,246,0.4);
+      color: #93c5fd;
+      padding: 6px 18px;
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+    }
+    .cover h1 {
+      font-size: 38px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .cover h1 span { color: #60a5fa; }
+    .cover .subtitle {
+      font-size: 16px;
+      color: #94a3b8;
+      margin-bottom: 50px;
+    }
+    .cover-meta {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 24px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: left;
+      width: 100%;
+      max-width: 420px;
+    }
+    .cover-meta-row { display: flex; gap: 10px; align-items: center; }
+    .cover-meta-label { color: #64748b; font-size: 11px; min-width: 90px; }
+    .cover-meta-value { color: #e2e8f0; font-size: 12px; font-weight: 500; }
+    .cover-tools {
+      margin-top: 50px;
+      display: flex;
+      gap: 14px;
+    }
+    .cover-tool-chip {
+      background: rgba(99,102,241,0.2);
+      border: 1px solid rgba(99,102,241,0.4);
+      color: #a5b4fc;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* ── CONTENT PAGE ── */
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 10px auto;
+      background: #fff;
+      padding: 40px 45px;
+      page-break-after: always;
+      position: relative;
+    }
+
+    /* Page header stripe */
+    .page-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    .page-header-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .page-header-text h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .page-header-text p {
+      font-size: 11px;
+      color: #64748b;
+      font-weight: 500;
+    }
+    .step-badge {
+      margin-left: auto;
+      padding: 4px 14px;
+      border-radius: 99px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* Colors per section */
+    .swot  .page-header-icon { background: #eff6ff; }
+    .pestel .page-header-icon { background: #f0fdf4; }
+    .porter .page-header-icon { background: #faf5ff; }
+
+    .swot  .step-badge { background: #dbeafe; color: #1d4ed8; }
+    .pestel .step-badge { background: #dcfce7; color: #15803d; }
+    .porter .step-badge { background: #ede9fe; color: #7c3aed; }
+
+    /* ── SWOT GRID ── */
+    .swot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .swot-card {
+      border-radius: 12px;
+      padding: 18px;
+    }
+    .swot-card.forces   { background: #eff6ff; border-left: 4px solid #3b82f6; }
+    .swot-card.faiblesses { background: #fff7ed; border-left: 4px solid #f97316; }
+    .swot-card.opportunites { background: #f0fdf4; border-left: 4px solid #22c55e; }
+    .swot-card.menaces  { background: #fef2f2; border-left: 4px solid #ef4444; }
+
+    .swot-card h3 {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .swot-card.forces h3   { color: #1d4ed8; }
+    .swot-card.faiblesses h3 { color: #c2410c; }
+    .swot-card.opportunites h3 { color: #15803d; }
+    .swot-card.menaces h3  { color: #b91c1c; }
+
+    .swot-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .swot-card ul li {
+      font-size: 11.5px;
+      color: #374151;
+      padding-left: 14px;
+      position: relative;
+    }
+    .swot-card ul li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      font-size: 10px;
+    }
+
+    /* ── PESTEL CARDS ── */
+    .pestel-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+    .pestel-card {
+      border-radius: 10px;
+      padding: 14px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+    .pestel-card-letter {
+      width: 34px; height: 34px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .pestel-card h3 {
+      font-size: 11px;
+      font-weight: 700;
+      color: #374151;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .pestel-card p {
+      font-size: 11px;
+      color: #475569;
+      line-height: 1.55;
+    }
+    .pc-p .pestel-card-letter { background: #dbeafe; color: #1d4ed8; }
+    .pc-e .pestel-card-letter { background: #dcfce7; color: #15803d; }
+    .pc-s .pestel-card-letter { background: #fef9c3; color: #92400e; }
+    .pc-t .pestel-card-letter { background: #ede9fe; color: #6d28d9; }
+    .pc-ec .pestel-card-letter { background: #d1fae5; color: #065f46; }
+    .pc-l .pestel-card-letter { background: #fee2e2; color: #991b1b; }
+
+    /* ── PORTER DIAGRAM ── */
+    .porter-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .porter-card {
+      border-radius: 10px;
+      padding: 14px 16px;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+    }
+    .porter-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .porter-card h3 {
+      font-size: 12px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .intensity-badge {
+      padding: 3px 10px;
+      border-radius: 99px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+    .intensity-high { background: #fee2e2; color: #b91c1c; }
+    .intensity-medium { background: #fef9c3; color: #92400e; }
+    .porter-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .porter-card ul li {
+      font-size: 11px;
+      color: #475569;
+      padding-left: 14px;
+      position: relative;
+    }
+    .porter-card ul li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+    }
+    .porter-center {
+      grid-column: span 2;
+      background: linear-gradient(135deg, #1e3a5f, #0f172a);
+      border-radius: 10px;
+      padding: 18px;
+      text-align: center;
+      color: #fff;
+    }
+    .porter-center h3 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+    .porter-center p { font-size: 11px; color: #93c5fd; }
+
+    /* ── SUMMARY TABLE ── */
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    .summary-table th {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .summary-table td {
+      padding: 10px 14px;
+      font-size: 11.5px;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: top;
+    }
+    .summary-table tr:nth-child(even) td { background: #f8fafc; }
+
+    /* ── RECOMMENDATION BOX ── */
+    .reco-box {
+      margin-top: 20px;
+      background: linear-gradient(135deg, #eff6ff, #f0fdf4);
+      border: 1px solid #bfdbfe;
+      border-left: 4px solid #3b82f6;
+      border-radius: 10px;
+      padding: 18px 20px;
+    }
+    .reco-box h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1d4ed8;
+      margin-bottom: 8px;
+    }
+    .reco-box p { font-size: 11.5px; color: #334155; line-height: 1.6; }
+
+    /* ── FOOTER ── */
+    .page-footer {
+      position: absolute;
+      bottom: 20px;
+      left: 45px;
+      right: 45px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10px;
+      color: #94a3b8;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 10px;
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      body { background: #fff; }
+      .cover { min-height: 297mm; }
+      .page { margin: 0; box-shadow: none; }
+    }
+
+    /* Print button */
+    .print-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
+      color: #fff;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 99px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 8px 30px rgba(99,102,241,0.4);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Inter', sans-serif;
+      z-index: 999;
+    }
+    .print-btn:hover { transform: translateY(-2px); transition: 0.2s; }
+    @media print { .print-btn { display: none; } }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════ COVER ══════════════════════════ -->
+<div class="cover">
+  <div class="cover-badge">Analyse Stratégique</div>
+  <h1>Emsi<span>Exam</span></h1>
+  <p class="subtitle">Système de Gestion d'Examens en Ligne</p>
+
+  <div class="cover-meta">
+    <div class="cover-meta-row">
+      <span class="cover-meta-label">Produit</span>
+      <span class="cover-meta-value">EmsiExam — Online Exam Management System</span>
+    </div>
+    <div class="cover-meta-row">
+      <span class="cover-meta-label">Stack</span>
+      <span class="cover-meta-value">React 19 · Vite · Tailwind CSS · Spring Boot</span>
+    </div>
+    <div class="cover-meta-row">
+      <span class="cover-meta-label">Rôles</span>
+      <span class="cover-meta-value">Admin · Professeur · Étudiant</span>
+    </div>
+    <div class="cover-meta-row">
+      <span class="cover-meta-label">Date</span>
+      <span class="cover-meta-value">Avril 2026</span>
+    </div>
+  </div>
+
+  <div class="cover-tools">
+    <div class="cover-tool-chip">SWOT</div>
+    <div class="cover-tool-chip">PESTEL</div>
+    <div class="cover-tool-chip">5 Forces de Porter</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════ PAGE 1 — SWOT ══════════════════════════ -->
+<div class="page swot">
+  <div class="page-header">
+    <div class="page-header-icon">📊</div>
+    <div class="page-header-text">
+      <h2>Analyse SWOT</h2>
+      <p>Forces · Faiblesses · Opportunités · Menaces</p>
+    </div>
+    <div class="step-badge">Étape 1</div>
+  </div>
+
+  <div class="swot-grid">
+    <!-- Forces -->
+    <div class="swot-card forces">
+      <h3>✅ Forces</h3>
+      <ul>
+        <li>Stack React 19 + Vite — SPA moderne, rapide et responsive</li>
+        <li>Système de rôles complet (Admin / Professeur / Étudiant) avec routes protégées <code>ProtectedRoute</code></li>
+        <li>Auto-soumission chronométrée des examens en cas d'expiration du temps</li>
+        <li>Support multi-langues : Français, Anglais, Arabe, Espagnol, Allemand via <code>react-i18next</code></li>
+        <li>Gestion complète : Examens, Étudiants, Professeurs, Groupes, Absences, Soumissions PDF</li>
+        <li>Application web accessible depuis tout navigateur, sans installation</li>
+        <li>Solution interne sans coût de licence par utilisateur</li>
+        <li>Interface moderne valorisant l'image de l'EMSI</li>
+      </ul>
+    </div>
+
+    <!-- Faiblesses -->
+    <div class="swot-card faiblesses">
+      <h3>⚠️ Faiblesses</h3>
+      <ul>
+        <li>Backend Spring Boot non déployé (API pointe vers <code>localhost:8080</code>)</li>
+        <li>Absence de génération automatique de questions (IA / banque de questions)</li>
+        <li>Pas de notifications en temps réel (websockets)</li>
+        <li>Aucun tableau de bord analytique avancé (statistiques, courbes de progression)</li>
+        <li>Coût d'hébergement et de maintenance serveur (cloud)</li>
+        <li>Dépendance à une connexion internet — aucun mode hors-ligne</li>
+        <li>Pas de documentation utilisateur intégrée dans l'application</li>
+      </ul>
+    </div>
+
+    <!-- Opportunités -->
+    <div class="swot-card opportunites">
+      <h3>🚀 Opportunités</h3>
+      <ul>
+        <li>Montée en puissance de l'e-learning et des plateformes d'examens post-COVID</li>
+        <li>Augmentation des effectifs étudiants dans les écoles d'ingénierie marocaines</li>
+        <li>Réduction des coûts d'impression, de surveillance et de correction manuelle</li>
+        <li>Intégration future d'une IA pour la génération et correction de questions</li>
+        <li>Politique nationale de digitalisation de l'éducation (Plan Maroc Numérique)</li>
+        <li>Argument écologique fort : réduction de l'utilisation du papier</li>
+        <li>Reconnaissance croissante des certifications numériques</li>
+      </ul>
+    </div>
+
+    <!-- Menaces -->
+    <div class="swot-card menaces">
+      <h3>🔴 Menaces</h3>
+      <ul>
+        <li>Concurrence de plateformes établies (Moodle, Google Classroom, Blackboard)</li>
+        <li>Risques liés à la protection des données étudiantes (RGPD / Loi 09-08 Maroc)</li>
+        <li>Résistance au changement des enseignants habitués aux examens papier</li>
+        <li>Risques de triche en ligne via outils d'IA génératives (ChatGPT, etc.)</li>
+        <li>Budget limité des établissements pour investir dans des solutions numériques</li>
+        <li>Coût énergétique des serveurs et de l'infrastructure cloud</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>EmsiExam — Analyse Stratégique</span>
+    <span>Avril 2026</span>
+    <span>Page 1 / 3</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════ PAGE 2 — PESTEL ══════════════════════════ -->
+<div class="page pestel">
+  <div class="page-header">
+    <div class="page-header-icon">🌍</div>
+    <div class="page-header-text">
+      <h2>Analyse PESTEL</h2>
+      <p>Macro-environnement du projet EmsiExam</p>
+    </div>
+    <div class="step-badge">Étape 2</div>
+  </div>
+
+  <div class="pestel-grid">
+    <div class="pestel-card pc-p">
+      <div class="pestel-card-letter">P</div>
+      <h3>Politique</h3>
+      <p>Politiques de digitalisation de l'éducation (Vision Maroc 2030). Soutien gouvernemental aux outils numériques dans l'enseignement supérieur. Réglementations variables sur la reconnaissance des examens à distance. Politiques de cybersécurité nationales imposant des standards de sécurité.</p>
+    </div>
+
+    <div class="pestel-card pc-e">
+      <div class="pestel-card-letter">E</div>
+      <h3>Économique</h3>
+      <p>Marché EdTech mondial en croissance de +16%/an (2023–2028). Réduction des coûts opérationnels (papier, surveillance, correction). Pouvoir d'achat des établissements privés (EMSI) favorable à l'investissement. ROI positif à moyen terme.</p>
+    </div>
+
+    <div class="pestel-card pc-s">
+      <div class="pestel-card-letter">S</div>
+      <h3>Social</h3>
+      <p>Population estudiantine marocaine jeune et habituée aux outils numériques. Tendance vers l'apprentissage hybride depuis 2020. Attente d'interfaces modernes, rapides et intuitives. Valeurs d'équité, transparence et accessibilité.</p>
+    </div>
+
+    <div class="pestel-card pc-t">
+      <div class="pestel-card-letter">T</div>
+      <h3>Technologique</h3>
+      <p>React 19 + Vite : stack de pointe très performante. Montée de l'IA générative (génération de QCM automatique). Spring Boot comme backend robuste et scalable. Tendances PWA, notifications push et mode hors-ligne. Risque croissant de cybermenaces et de triche via IA.</p>
+    </div>
+
+    <div class="pestel-card pc-ec">
+      <div class="pestel-card-letter">E</div>
+      <h3>Écologique</h3>
+      <p>Réduction significative de la consommation de papier (épreuves physiques éliminées). Coût énergétique des serveurs cloud à considérer. Options de datacenters verts disponibles (AWS Green, Azure Carbon Neutral). Argument écologique fort pour l'adoption institutionnelle.</p>
+    </div>
+
+    <div class="pestel-card pc-l">
+      <div class="pestel-card-letter">L</div>
+      <h3>Légal</h3>
+      <p>Loi 09-08 (Maroc) sur la protection des données personnelles étudiantes. RGPD applicable si déploiement européen. Droits d'auteur sur les contenus d'examens. Normes de cybersécurité : authentification forte, chiffrement, logs d'audit. Droits des étudiants : transparence sur la notation.</p>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>EmsiExam — Analyse Stratégique</span>
+    <span>Avril 2026</span>
+    <span>Page 2 / 3</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════ PAGE 3 — PORTER ══════════════════════════ -->
+<div class="page porter">
+  <div class="page-header">
+    <div class="page-header-icon">⚔️</div>
+    <div class="page-header-text">
+      <h2>Les 5 Forces de Porter</h2>
+      <p>Analyse de l'environnement concurrentiel d'EmsiExam</p>
+    </div>
+    <div class="step-badge">Étape 3</div>
+  </div>
+
+  <div class="porter-grid">
+    <!-- Pouvoir fournisseurs -->
+    <div class="porter-card">
+      <div class="porter-card-header">
+        <h3>🏭 Pouvoir des Fournisseurs</h3>
+        <span class="intensity-badge intensity-medium">Moyen</span>
+      </div>
+      <ul>
+        <li>Peu de fournisseurs cloud majeurs (AWS, Azure, GCP) — concentration élevée</li>
+        <li>Coûts d'hébergement impactent directement le prix de la solution</li>
+        <li>Technologies open-source (React, Spring Boot) — dépendance limitée</li>
+        <li>Déploiement on-premise possible (serveur local EMSI)</li>
+        <li>Grands fournisseurs peu dépendants d'un seul client</li>
+      </ul>
+    </div>
+
+    <!-- Pouvoir clients -->
+    <div class="porter-card">
+      <div class="porter-card-header">
+        <h3>🎓 Pouvoir des Clients</h3>
+        <span class="intensity-badge intensity-high">Élevé</span>
+      </div>
+      <ul>
+        <li>L'EMSI peut exiger des fonctionnalités ou menacer de changer de solution</li>
+        <li>Institutions scolaires très sensibles aux coûts (préfèrent solutions gratuites)</li>
+        <li>Clientèle concentrée → fort levier de négociation</li>
+        <li>Clients bien informés des alternatives disponibles sur le marché</li>
+        <li>Migration vers Moodle / Google Classroom reste accessible</li>
+      </ul>
+    </div>
+
+    <!-- Intensité concurrence -->
+    <div class="porter-card">
+      <div class="porter-card-header">
+        <h3>⚔️ Intensité Concurrentielle</h3>
+        <span class="intensity-badge intensity-high">Élevée</span>
+      </div>
+      <ul>
+        <li>Marché dominé par Moodle, Google Classroom, Blackboard, MS Teams Education</li>
+        <li>Différenciation via gestion des absences, soumissions PDF, multi-langues</li>
+        <li>Faibles coûts de changement pour les institutions</li>
+        <li>Interface intuitive réduit la résistance au changement</li>
+        <li>Fidélisation possible via intégration profonde avec les processus EMSI</li>
+      </ul>
+    </div>
+
+    <!-- Substituts -->
+    <div class="porter-card">
+      <div class="porter-card-header">
+        <h3>🔄 Produits de Substitution</h3>
+        <span class="intensity-badge intensity-high">Élevée</span>
+      </div>
+      <ul>
+        <li>Coût de changement faible — Google Forms ou Moodle adoptables facilement</li>
+        <li>Forte propension à substituer si manque de fonctionnalités</li>
+        <li>Moodle, Google Classroom : notoriété mondiale très forte</li>
+        <li>Moodle est gratuit et open-source — substitut économique très attractif</li>
+        <li>Différenciation par personnalisation EMSI et fonctionnalités spécifiques</li>
+      </ul>
+    </div>
+
+    <!-- Nouveaux entrants -->
+    <div class="porter-card" style="grid-column: span 2;">
+      <div class="porter-card-header">
+        <h3>🆕 Menace de Nouveaux Entrants</h3>
+        <span class="intensity-badge intensity-medium">Moyenne</span>
+      </div>
+      <ul>
+        <li>Développer une plateforme d'examen demande 6 à 18 mois et une équipe technique dédiée</li>
+        <li>Technologies accessibles (React, Spring Boot) mais intégration complexe (sécurité, anti-triche, horodatage)</li>
+        <li>Économies d'échelle des grandes plateformes difficiles à égaler</li>
+        <li>Peu de brevets dans ce secteur — faible barrière légale à l'entrée</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <h3 style="font-size:13px; font-weight:700; margin: 22px 0 10px; color:#0f172a;">📊 Synthèse Stratégique</h3>
+  <table class="summary-table">
+    <thead>
+      <tr>
+        <th>Outil</th>
+        <th>Résultat clé</th>
+        <th>Verdict</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>SWOT</strong></td>
+        <td>Produit techniquement solide, manques à combler (backend, analytics, anti-triche)</td>
+        <td>🟡 Potentiel fort</td>
+      </tr>
+      <tr>
+        <td><strong>PESTEL</strong></td>
+        <td>Environnement favorable : digitalisation, démographie jeune — contraintes légales à surveiller</td>
+        <td>🟢 Favorable</td>
+      </tr>
+      <tr>
+        <td><strong>Porter</strong></td>
+        <td>Position difficile face aux géants (Moodle, Google) — différenciation via spécialisation EMSI</td>
+        <td>🔴 Concurrence forte</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="reco-box">
+    <h3>💡 Recommandation Stratégique</h3>
+    <p>
+      Renforcer la différenciation d'EmsiExam par l'intégration d'une <strong>IA pour la génération automatique de questions</strong>, d'un <strong>module anti-triche</strong> (détection de changement d'onglet, surveillance webcam) et d'un <strong>tableau de bord analytique</strong> avancé (taux de réussite, courbes de progression, statistiques par groupe). Ces fonctionnalités créent une vraie barrière à la substitution et justifient l'adoption face aux alternatives gratuites comme Moodle.
+    </p>
+  </div>
+
+  <div class="page-footer">
+    <span>EmsiExam — Analyse Stratégique</span>
+    <span>Avril 2026</span>
+    <span>Page 3 / 3</span>
+  </div>
+</div>
+
+<!-- Print Button -->
+<button class="print-btn" onclick="window.print()">
+  🖨️ Exporter en PDF
+</button>
+
+</body>
+</html>
