@@ -1,0 +1,59 @@
+{
+    "navbar": {
+        "dashboard": "Panel de control",
+        "students": "Estudiantes",
+        "professors": "Profesores",
+        "exams": "Exámenes",
+        "my_exams": "Mis exámenes",
+        "grades": "Calificaciones",
+        "my_results": "Mis resultados",
+        "logout": "Cerrar sesión",
+        "login": "Iniciar sesión",
+        "register": "Registrarse"
+    },
+    "roles": {
+        "admin": "Administrador",
+        "professor": "Profesor",
+        "student": "Estudiante"
+    },
+    "login": {
+        "title": "Iniciar sesión en EmsiExam",
+        "demo_accounts": "Cuentas de demostración:",
+        "email": "Correo electrónico",
+        "password": "Contraseña",
+        "submit": "Iniciar sesión",
+        "no_account": "¿No tienes una cuenta?",
+        "register_here": "Regístrate aquí"
+    },
+    "register": {
+        "title": "Crear una cuenta",
+        "full_name": "Nombre completo",
+        "email": "Correo electrónico",
+        "password": "Contraseña",
+        "submit": "Registrarse",
+        "has_account": "¿Ya tienes una cuenta?",
+        "login_here": "Inicia sesión aquí"
+    },
+    "dashboard": {
+        "available_exams": "Exámenes disponibles",
+        "no_exams": "No hay exámenes disponibles en este momento.",
+        "duration": "Duración",
+        "minutes": "minutos",
+        "opens": "Abre:",
+        "closes": "Cierra:",
+        "start_exam": "Comenzar examen",
+        "exam_closed": "Examen cerrado",
+        "not_yet_open": "Aún no abierto",
+        "unavailable": "No disponible"
+    },
+    "common": {
+        "loading": "Cargando...",
+        "cancel": "Cancelar",
+        "save": "Guardar",
+        "add": "Añadir",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "update": "Actualizar",
+        "close": "Cerrar"
+    }
+}

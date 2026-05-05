@@ -1,0 +1,59 @@
+{
+    "navbar": {
+        "dashboard": "Tableau de bord",
+        "students": "Étudiants",
+        "professors": "Professeurs",
+        "exams": "Examens",
+        "my_exams": "Mes Examens",
+        "grades": "Notes",
+        "my_results": "Mes Résultats",
+        "logout": "Déconnexion",
+        "login": "Connexion",
+        "register": "S'inscrire"
+    },
+    "roles": {
+        "admin": "Admin",
+        "professor": "Professeur",
+        "student": "Étudiant"
+    },
+    "login": {
+        "title": "Connexion EmsiExam",
+        "demo_accounts": "Comptes de démonstration :",
+        "email": "Email",
+        "password": "Mot de passe",
+        "submit": "Se connecter",
+        "no_account": "Pas encore de compte ?",
+        "register_here": "S'inscrire ici"
+    },
+    "register": {
+        "title": "Créer un compte",
+        "full_name": "Nom complet",
+        "email": "Email",
+        "password": "Mot de passe",
+        "submit": "S'inscrire",
+        "has_account": "Vous avez déjà un compte ?",
+        "login_here": "Connectez-vous ici"
+    },
+    "dashboard": {
+        "available_exams": "Examens disponibles",
+        "no_exams": "Aucun examen disponible actuellement.",
+        "duration": "Durée",
+        "minutes": "minutes",
+        "opens": "Ouverture :",
+        "closes": "Fermeture :",
+        "start_exam": "Commencer l'examen",
+        "exam_closed": "Examen fermé",
+        "not_yet_open": "Pas encore ouvert",
+        "unavailable": "Indisponible"
+    },
+    "common": {
+        "loading": "Chargement...",
+        "cancel": "Annuler",
+        "save": "Sauvegarder",
+        "add": "Ajouter",
+        "edit": "Modifier",
+        "delete": "Supprimer",
+        "update": "Mettre à jour",
+        "close": "Fermer"
+    }
+}

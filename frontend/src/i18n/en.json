@@ -1,0 +1,59 @@
+{
+    "navbar": {
+        "dashboard": "Dashboard",
+        "students": "Students",
+        "professors": "Professors",
+        "exams": "Exams",
+        "my_exams": "My Exams",
+        "grades": "Grades",
+        "my_results": "My Results",
+        "logout": "Logout",
+        "login": "Login",
+        "register": "Register"
+    },
+    "roles": {
+        "admin": "Admin",
+        "professor": "Professor",
+        "student": "Student"
+    },
+    "login": {
+        "title": "EmsiExam Login",
+        "demo_accounts": "Demo Accounts:",
+        "email": "Email",
+        "password": "Password",
+        "submit": "Login",
+        "no_account": "Don't have an account?",
+        "register_here": "Register here"
+    },
+    "register": {
+        "title": "Create an Account",
+        "full_name": "Full Name",
+        "email": "Email",
+        "password": "Password",
+        "submit": "Register",
+        "has_account": "Already have an account?",
+        "login_here": "Login here"
+    },
+    "dashboard": {
+        "available_exams": "Available Exams",
+        "no_exams": "No exams currently available.",
+        "duration": "Duration",
+        "minutes": "minutes",
+        "opens": "Opens:",
+        "closes": "Closes:",
+        "start_exam": "Start Exam",
+        "exam_closed": "Exam Closed",
+        "not_yet_open": "Not Yet Open",
+        "unavailable": "Unavailable"
+    },
+    "common": {
+        "loading": "Loading...",
+        "cancel": "Cancel",
+        "save": "Save",
+        "add": "Add",
+        "edit": "Edit",
+        "delete": "Delete",
+        "update": "Update",
+        "close": "Close"
+    }
+}

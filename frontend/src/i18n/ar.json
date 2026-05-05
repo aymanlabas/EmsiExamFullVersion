@@ -1,0 +1,59 @@
+{
+    "navbar": {
+        "dashboard": "لوحة القيادة",
+        "students": "الطلاب",
+        "professors": "الأساتذة",
+        "exams": "الامتحانات",
+        "my_exams": "امتحاناتي",
+        "grades": "الدرجات",
+        "my_results": "نتائجي",
+        "logout": "تسجيل الخروج",
+        "login": "تسجيل الدخول",
+        "register": "إنشاء حساب"
+    },
+    "roles": {
+        "admin": "مشرف",
+        "professor": "أستاذ",
+        "student": "طالب"
+    },
+    "login": {
+        "title": "تسجيل الدخول",
+        "demo_accounts": "حسابات تجريبية:",
+        "email": "البريد الإلكتروني",
+        "password": "كلمة المرور",
+        "submit": "تسجيل الدخول",
+        "no_account": "ليس لديك حساب؟",
+        "register_here": "سجل هنا"
+    },
+    "register": {
+        "title": "إنشاء حساب",
+        "full_name": "الاسم الكامل",
+        "email": "البريد الإلكتروني",
+        "password": "كلمة المرور",
+        "submit": "إنشاء حساب",
+        "has_account": "لديك حساب بالفعل؟",
+        "login_here": "سجل الدخول هنا"
+    },
+    "dashboard": {
+        "available_exams": "الامتحانات المتاحة",
+        "no_exams": "لا توجد امتحانات متاحة حالياً.",
+        "duration": "المدة",
+        "minutes": "دقائق",
+        "opens": "يفتح:",
+        "closes": "يغلق:",
+        "start_exam": "بدء الامتحان",
+        "exam_closed": "الامتحان مغلق",
+        "not_yet_open": "لم يفتح بعد",
+        "unavailable": "غير متاح"
+    },
+    "common": {
+        "loading": "جاري التحميل...",
+        "cancel": "إلغاء",
+        "save": "حفظ",
+        "add": "إضافة",
+        "edit": "تعديل",
+        "delete": "حذف",
+        "update": "تحديث",
+        "close": "إغلاق"
+    }
+}
