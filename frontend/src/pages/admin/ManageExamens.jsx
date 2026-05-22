@@ -2,13 +2,15 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getExamens, createExamen, updateExamen, deleteExamen } from '../../services/examenService';
 import { getProfesseurs } from '../../services/professeurService';
+import { getGroupes } from '../../services/groupService';
 
-const EMPTY_FORM = { titre: '', fichierPdf: '', dateDebut: '', dateFin: '', duree: '', professeur: null };
+const EMPTY_FORM = { titre: '', fichierPdf: '', dateDebut: '', dateFin: '', duree: '', professeur: null, groupeId: '' };
 
 const ManageExamens = () => {
     const { t } = useTranslation();
     const [examens, setExamens] = useState([]);
     const [professeurs, setProfesseurs] = useState([]);
+    const [groupes, setGroupes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [saving, setSaving] = useState(false);
@@ -20,9 +22,11 @@ const ManageExamens = () => {
         try {
             setLoading(true);
             setError(null);
-            const [examData, profData] = await Promise.all([getExamens(), getProfesseurs()]);
+            const [examData, profData, groupeData] = await Promise.all([getExamens(), getProfesseurs(), getGroupes()]);
             setExamens(examData);
             setProfesseurs(profData);
+            setGroupes(groupeData);
+
         } catch (err) {
             setError(err.response?.data?.message || 'Erreur lors du chargement des données.');
         } finally {
@@ -43,6 +47,7 @@ const ManageExamens = () => {
                 dateFin: form.dateFin,
                 duree: Number(form.duree),
                 professeur: form.professeur ? { id: Number(form.professeur) } : null,
+                groupe: form.groupeId ? { id: Number(form.groupeId) } : null  
             };
             if (editingId) {
                 await updateExamen(editingId, payload);
@@ -66,6 +71,7 @@ const ManageExamens = () => {
             dateFin: ex.dateFin ? ex.dateFin.slice(0, 16) : '',
             duree: ex.duree || '',
             professeur: ex.professeur?.id || '',
+            groupeId: ex.groupe?.id || '',
         });
         setEditingId(ex.id);
         setShowForm(true);
@@ -176,6 +182,17 @@ const ManageExamens = () => {
                                 ))}
                             </select>
                         </div>
+                        
+                        <div>    
+    <label className="block text-sm font-semibold text-gray-700 mb-1">Groupe <span className="text-red-500">*</span></label>
+    <select value={form.groupeId} onChange={e => setForm({ ...form, groupeId: e.target.value })}
+        className="w-full px-3 py-2 border rounded focus:ring-2 focus:ring-green-500 focus:outline-none">
+        <option value="">-- Sélectionner --</option>
+        {groupes.map(g => (
+            <option key={g.id} value={g.id}>{g.nameClass}</option>
+        ))}
+    </select>
+</div>
                     </div>
                     <div className="flex gap-3 mt-4">
                         <button onClick={handleSave} disabled={saving}

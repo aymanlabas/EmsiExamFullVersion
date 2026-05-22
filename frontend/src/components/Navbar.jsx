@@ -79,7 +79,7 @@ const Navbar = () => {
                             )}
                             {user.role === 'ETUDIANT' && (
                                 <>
-                                    <Link to="/exams" className="hover:text-green-200 transition">{t('navbar.exams')}</Link>
+                                    {/* <Link to="/exams" className="hover:text-green-200 transition">{t('navbar.exams')}</Link> */}
                                     <Link to="/results" className="hover:text-green-200 transition">{t('navbar.my_results')}</Link>
                                 </>
                             )}
