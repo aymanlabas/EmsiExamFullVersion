@@ -1,4 +1,4 @@
-# EmsiExam – Full Version
+# EmsiExam 
 
 Application web complète (Back-end + Front-end) dédiée à la gestion d'examens pour l'EMSI, où les étudiants peuvent passer leurs examens directement sur la plateforme.
 ---
@@ -69,8 +69,8 @@ EmsiExam/
 | Couche           | Technologie                                     |
 | ---------------- | ----------------------------------------------- |
 | Back-end         | Java, Spring Boot, Maven (Maven Wrapper)        |
-| Front-end        | _À compléter (React / Angular / Vue.js…)_       |
-| Base de données  | _À compléter (MySQL / PostgreSQL…)_             |
+| Front-end        | React js                                        |
+| Base de données  | MySQL                                           |
 | Outils           | Git, npm, Postman                               |
 
 ## Prérequis
