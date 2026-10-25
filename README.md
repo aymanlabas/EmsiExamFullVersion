@@ -1,6 +1,6 @@
 # EmsiExam 
 
-Application web complète (Back-end + Front-end) dédiée à la gestion d'examens pour l'EMSI, où les étudiants peuvent passer leurs examens directement sur la plateforme.
+Application web complète (Back-end + Front-end) dédiée à la gestion d'examens pour l'EMSI, aussi les étudiants peuvent passer leurs examens directement sur la plateforme.
 ---
 
 ## Table des matières
